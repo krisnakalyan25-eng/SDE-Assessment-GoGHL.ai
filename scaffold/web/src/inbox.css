@@ -1,0 +1,33 @@
+﻿:root { font: 16px/1.5 system-ui, sans-serif; color: #162239; background: #f3f6fb; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+main { max-width: 1150px; margin: 0 auto; padding: 24px; }
+h1, h2, p { margin: 0; }
+h2 { font-size: 1.25rem; }
+.top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 24px; }
+.top form { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+label { font-weight: 600; }
+button, input, select, textarea { font: inherit; }
+button, input, select, textarea { border: 1px solid #afbdd0; border-radius: 8px; padding: 8px 12px; }
+button { background: #17489c; border-color: #17489c; color: white; cursor: pointer; }
+button:disabled { cursor: default; opacity: .6; }
+.inbox { display: grid; grid-template-columns: minmax(210px, 280px) minmax(0, 1fr); border: 1px solid #d8e0ed; border-radius: 12px; background: white; }
+aside, .thread { padding: 20px; min-width: 0; }
+aside { border-right: 1px solid #d8e0ed; }
+aside select { width: 100%; margin: 8px 0 16px; background: white; }
+.conversation { display: block; width: 100%; text-align: left; color: inherit; background: white; border-color: transparent; }
+.conversation[aria-pressed="true"] { background: #e7efff; border-color: #b8ccf3; }
+.conversation span { display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.messages { display: grid; gap: 12px; min-height: 240px; max-height: 55vh; overflow: auto; padding: 0 4px; align-content: start; list-style: none; }
+.messages li { max-width: 85%; justify-self: start; background: #eef2f7; padding: 10px 14px; border-radius: 10px; overflow-wrap: anywhere; white-space: pre-wrap; }
+.messages .outbound { justify-self: end; background: #e7efff; }
+small { color: #44536a; }
+.composer { display: grid; gap: 8px; }
+.composer button { justify-self: start; }
+textarea { resize: vertical; }
+[role="alert"] { color: #96351f; }
+@media (max-width: 650px) {
+  main { padding: 12px; }
+  .inbox { grid-template-columns: minmax(0, 1fr); }
+  aside { border-right: 0; border-bottom: 1px solid #d8e0ed; max-height: 230px; overflow: auto; }
+}

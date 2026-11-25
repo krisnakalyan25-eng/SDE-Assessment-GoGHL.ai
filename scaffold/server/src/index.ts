@@ -131,6 +131,28 @@ grader.post('/reset', route(async (_req, res) => {
   return res.sendStatus(200);
 }));
 
+grader.get('/inbox', route(async (req, res) => {
+  const workspace = req.query.workspace;
+  if (!knownWorkspace(workspace)) return res.sendStatus(400);
+
+  const [received, sent] = await Promise.all([
+    inbound.find({ workspace }).sort({ occurredAt: -1, messageId: -1 }).limit(200).toArray(),
+    replies.find({ workspace }).sort({ _id: -1 }).limit(200).toArray(),
+  ]);
+  const messages = [
+    ...received.map(message => ({
+      id: message.messageId, contact: message.contact, text: message.text,
+      time: message.occurredAt.toISOString(), direction: 'inbound',
+    })),
+    ...sent.map(message => ({
+      id: message.clientRef, contact: message.contact, text: message.text,
+      time: message._id.getTimestamp().toISOString(), direction: 'outbound', status: message.status,
+    })),
+  ];
+  messages.sort((a, b) => a.time.localeCompare(b.time));
+  res.json({ messages });
+}));
+
 grader.get('/snapshot', route(async (_req, res) => {
   type Contact = { inbound: string[]; assignee: string | null };
   const workspaces: Record<string, { contacts: Record<string, Contact>; outbound: Record<string, string> }> =

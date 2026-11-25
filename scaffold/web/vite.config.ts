@@ -8,8 +8,10 @@ const server = 'http://localhost:4000';
 export default defineConfig({
   plugins: [react()],
   server: {
+    host: '127.0.0.1',
     port: 5173,
     proxy: {
+      '/__grader': server,
       '/api': server,
       '/auth': server,
       '/healthz': server,
